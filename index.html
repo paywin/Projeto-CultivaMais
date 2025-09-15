@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cultiva+</title>
+<link rel="shortcut icon" href="./imagens/cabeca.png" type="image/x-icon">
+<link rel="stylesheet" href="./css/index.css">
+<!--<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('Cultiva.png') no-repeat center center/cover;
+        position: relative;
+    }
+
+    /* Efeito de blur quando o modal estiver aberto */
+    body.modal-open {
+        overflow: hidden;
+    }
+
+    body.modal-open::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(5px);
+        z-index: 10;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: rgba(0, 0, 0, 0.4);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(5px);
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #4CAF50;
+        text-decoration: none;
+    }
+
+    header nav {
+        display: flex;
+        gap: 25px;
+    }
+
+    header nav a {
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    header nav a:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .center {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .center h1 {
+        font-size: clamp(3rem, 10vw, 6rem);
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .center p {
+        max-width: 600px;
+        margin: 20px 0;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .center button {
+        margin-top: 30px;
+        padding: 15px 40px;
+        border: 2px solid white;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        border-radius: 30px;
+    }
+
+    .center button:hover {
+        background: white;
+        color: #2E7D32;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .features {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        padding: 60px 20px;
+        background: rgba(0, 0, 0, 0.7);
+        flex-wrap: wrap;
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 25px;
+        border-radius: 10px;
+        width: 280px;
+        text-align: center;
+        backdrop-filter: blur(5px);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .feature-card h3 {
+        margin-bottom: 15px;
+        color: #4CAF50;
+    }
+
+    footer {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 30px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .mascote-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 80px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+
+    .mascote-btn:hover {
+        transform: scale(1.1);
+    }
+
+    /* Modal de seleção de perfil */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: linear-gradient(135deg, #1a3c1d 0%, #2e7d32 100%);
+        padding: 40px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        position: relative;
+        animation: modalFadeIn 0.5s;
+    }
+
+    @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: white;
+        background: rgba(0, 0, 0, 0.2);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+        background: rgba(0, 0, 0, 0.4);
+        transform: rotate(90deg);
+    }
+
+    .modal-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .profile-options {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .profile-option {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        text-align: center;
+    }
+
+    .profile-option:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-5px);
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .profile-option h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    .profile-option p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Páginas de Login (inicialmente ocultas) */
+    .login-page {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        overflow: auto;
+    }
+
+    .login-content {
+        background: linear-gradient(135deg, #1a3c1d 0%, #2e7d32 100%);
+        padding: 30px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 450px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        position: relative;
+        animation: modalFadeIn 0.5s;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .login-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: white;
+    }
+
+    .login-subtitle {
+        font-size: 14px;
+        margin-bottom: 20px;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px 12px;
+        border: none;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        color: #333;
+    }
+
+    .login-button {
+        margin-top: 10px;
+        padding: 10px;
+        border: none;
+        background: #FF9800;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        border-radius: 6px;
+    }
+
+    .login-button:hover {
+        background: #F57C00;
+        transform: translateY(-2px);
+    }
+
+    .back-button {
+        margin-top: 15px;
+        padding: 8px;
+        border: 2px solid white;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.3s ease;
+        border-radius: 6px;
+        width: 100%;
+    }
+
+    .back-button:hover {
+        background: white;
+        color: #2E7D32;
+    }
+
+    .toggle-form {
+        margin-top: 10px;
+        color: #FF9800;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        font-size: 12px;
+    }
+
+    /* Barra de scroll personalizada */
+    .login-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .login-content::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+
+    .login-content::-webkit-scrollbar-thumb {
+        background: #4CAF50;
+        border-radius: 3px;
+    }
+
+    .login-content::-webkit-scrollbar-thumb:hover {
+        background: #3e8e41;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            padding: 15px;
+        }
+        
+        header nav {
+            margin-top: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .features {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .center p {
+            font-size: 16px;
+        }
+        
+        .modal-content, .login-content {
+            padding: 20px 15px;
+            width: 95%;
+        }
+
+        .login-title {
+            font-size: 20px;
+        }
+
+        .login-subtitle {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .login-content {
+            padding: 15px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+        
+        .login-button {
+            padding: 8px;
+            font-size: 13px;
+        }
+    }
+</style> -->
+</head>
+<body>
+
+<header>
+    <a href="#" class="logo">CULTIVA+</a>
+    <nav>
+        <a href="marketplace.html">MARKETPLACE</a>
+        <a href="#">CLIMA</a>
+        <a href="#">AGRO-CONECTA</a>
+        <a href="sobre.html">SOBRE NÓS</a>
+        <a href="contato.html">CONTATO</a>
+    </nav>
+</header>
+
+<div class="center">
+    <h1>CULTIVA+</h1>
+    <p>Conectando agricultores, facilitando negócios e impulsionando o agronegócio brasileiro com tecnologia e inovação.</p>
+    <button id="joinButton">JUNTE-SE A NÓS</button>
+</div>
+
+<section class="features">
+    <div class="feature-card">
+        <h3>MARKETPLACE</h3>
+        <p>Compre e venda produtos agrícolas com segurança e praticidade.</p>
+    </div>
+    <div class="feature-card">
+        <h3>PREVISÃO DO CLIMA</h3>
+        <p>Informações meteorológicas precisas para melhor planejar sua colheita.</p>
+    </div>
+    <div class="feature-card">
+        <h3>AGRO-CONECTA</h3>
+        <p>Conecte-se com outros profissionais do agronegócio e expanda sua rede.</p>
+    </div>
+</section>
+
+<footer>
+    <p>Cultiva+ &copy; 2025</p>
+</footer>
+
+<a href="chatbot.html">
+    <img src="./imagens/cabeca.png" alt="Mascote" class="mascote-btn">
+</a>
+
+<!-- Modal de seleção de perfil -->
+<div class="modal" id="profileModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h2 class="modal-title">Selecione seu perfil</h2>
+        <div class="profile-options">
+            <div class="profile-option" data-profile="agricultor">
+                <h3>AGRICULTOR</h3>
+                <p>Ofereça seus produtos e conecte-se com compradores</p>
+            </div>
+            <div class="profile-option" data-profile="cliente">
+                <h3>CLIENTE</h3>
+                <p>Encontre produtos agrícolas de qualidade diretamente do produtor</p>
+            </div>
+            <div class="profile-option" data-profile="transportadora">
+                <h3>TRANSPORTADORA</h3>
+                <p>Ofereça serviços de logística para o agronegócio</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Página de Login para Agricultor -->
+<div class="login-page" id="agricultorLogin">
+    <div class="login-content">
+        <span class="close-modal" onclick="closeLoginPage('agricultorLogin')">&times;</span>
+        <h2 class="login-title">Login do Agricultor</h2>
+        <p class="login-subtitle">Acesse sua conta para gerenciar seus produtos e vendas</p>
+        
+        <form class="login-form" id="agricultorLoginForm">
+            <div class="form-group">
+                <label for="agricultor-cpf">CPF</label>
+                <input type="text" id="agricultor-cpf" placeholder="000.000.000-00" required 
+                       pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}">
+            </div>
+            
+            <div class="form-group">
+                <label for="agricultor-password">Senha</label>
+                <input type="password" id="agricultor-password" placeholder="Sua senha" required>
+            </div>
+            
+            <button type="submit" class="login-button">ENTRAR</button>
+        </form>
+        
+        <button class="toggle-form" onclick="showRegisterForm('agricultor')">
+            Não tem uma conta? Cadastre-se aqui
+        </button>
+        
+        <button class="back-button" onclick="closeLoginPage('agricultorLogin')">Voltar para a seleção de perfil</button>
+    </div>
+</div>
+
+<!-- Página de Cadastro para Agricultor -->
+<div class="login-page" id="agricultorRegister">
+    <div class="login-content">
+        <span class="close-modal" onclick="closeLoginPage('agricultorRegister')">&times;</span>
+        <h2 class="login-title">Cadastro de Agricultor</h2>
+        <p class="login-subtitle">Crie sua conta para começar a vender seus produtos</p>
+        
+        <form class="login-form" id="agricultorRegisterForm">
+            <div class="form-group">
+                <label for="agricultor-register-name">Nome Completo</label>
+                <input type="text" id="agricultor-register-name" placeholder="Seu nome completo" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="agricultor-register-cpf">CPF</label>
+                <input type="text" id="agricultor-register-cpf" placeholder="000.000.000-00" required 
+                       pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}">
+            </div>
+            
+            <div class="form-group">
+                <label for="agricultor-register-phone">Telefone</label>
+                <input type="tel" id="agricultor-register-phone" placeholder="(11) 99999-9999" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="agricultor-register-email">E-mail</label>
+                <input type="email" id="agricultor-register-email" placeholder="seu@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="agricultor-register-password">Senha</label>
+                <input type="password" id="agricultor-register-password" placeholder="Crie uma senha segura" required minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="agricultor-register-confirm-password">Confirmar Senha</label>
+                <input type="password" id="agricultor-register-confirm-password" placeholder="Digite novamente sua senha" required>
+            </div>
+            
+            <button type="submit" class="login-button">CRIAR CONTA</button>
+        </form>
+        
+        <button class="toggle-form" onclick="showLoginForm('agricultor')">
+            Já tem uma conta? Faça login aqui
+        </button>
+        
+        <button class="back-button" onclick="closeLoginPage('agricultorRegister')">Voltar para a seleção de perfil</button>
+    </div>
+</div>
+
+<!-- Página de Login para Cliente -->
+<div class="login-page" id="clienteLogin">
+    <div class="login-content">
+        <span class="close-modal" onclick="closeLoginPage('clienteLogin')">&times;</span>
+        <h2 class="login-title">Login do Cliente</h2>
+        <p class="login-subtitle">Acesse sua conta para encontrar os melhores produtos agrícolas</p>
+        
+        <form class="login-form" id="clienteLoginForm">
+            <div class="form-group">
+                <label for="cliente-email">E-mail</label>
+                <input type="email" id="cliente-email" placeholder="Seu e-mail cadastrado" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cliente-password">Senha</label>
+                <input type="password" id="cliente-password" placeholder="Sua senha" required>
+            </div>
+            
+            <button type="submit" class="login-button">ENTRAR</button>
+        </form>
+        
+        <button class="toggle-form" onclick="showRegisterForm('cliente')">
+            Não tem uma conta? Cadastre-se aqui
+        </button>
+        
+        <button class="back-button" onclick="closeLoginPage('clienteLogin')">Voltar para a seleção de perfil</button>
+    </div>
+</div>
+
+<!-- Página de Cadastro para Cliente -->
+<div class="login-page" id="clienteRegister">
+    <div class="login-content">
+        <span class="close-modal" onclick="closeLoginPage('clienteRegister')">&times;</span>
+        <h2 class="login-title">Cadastro de Cliente</h2>
+        <p class="login-subtitle">Crie sua conta para comprar produtos diretamente dos agricultores</p>
+        
+        <form class="login-form" id="clienteRegisterForm">
+            <div class="form-group">
+                <label for="cliente-register-name">Nome Completo</label>
+                <input type="text" id="cliente-register-name" placeholder="Seu nome completo" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cliente-register-email">E-mail</label>
+                <input type="email" id="cliente-register-email" placeholder="seu@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cliente-register-phone">Telefone</label>
+                <input type="tel" id="cliente-register-phone" placeholder="(11) 99999-9999" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cliente-register-password">Senha</label>
+                <input type="password" id="cliente-register-password" placeholder="Crie uma senha segura" required minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="cliente-register-confirm-password">Confirmar Senha</label>
+                <input type="password" id="cliente-register-confirm-password" placeholder="Digite novamente sua senha" required>
+            </div>
+            
+            <button type="submit" class="login-button">CRIAR CONTA</button>
+        </form>
+        
+        <button class="toggle-form" onclick="showLoginForm('cliente')">
+            Já tem uma conta? Faça login aqui
+        </button>
+        
+        <button class="back-button" onclick="closeLoginPage('clienteRegister')">Voltar para a seleção de perfil</button>
+    </div>
+</div>
+
+<!-- Página de Login para Transportadora -->
+<div class="login-page" id="transportadoraLogin">
+    <div class="login-content">
+        <span class="close-modal" onclick="closeLoginPage('transportadoraLogin')">&times;</span>
+        <h2 class="login-title">Login da Transportadora</h2>
+        <p class="login-subtitle">Acesse sua conta para gerenciar serviços de entrega</p>
+        
+        <form class="login-form" id="transportadoraLoginForm">
+            <div class="form-group">
+                <label for="transportadora-documento">CNPJ/CPF</label>
+                <input type="text" id="transportadora-documento" 
+                       placeholder="00.000.000/0000-00 ou 000.000.000-00" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="transportadora-password">Senha</label>
+                <input type="password" id="transportadora-password" placeholder="Sua senha" required>
+            </div>
+            
+            <button type="submit" class="login-button">ENTRAR</button>
+        </form>
+        
+        <button class="toggle-form" onclick="showRegisterForm('transportadora')">
+            Não tem uma conta? Cadastre-se aqui
+        </button>
+        
+        <button class="back-button" onclick="closeLoginPage('transportadoraLogin')">Voltar para a seleção de perfil</button>
+    </div>
+</div>
+
+<!-- Página de Cadastro para Transportadora -->
+<div class="login-page" id="transportadoraRegister">
+    <div class="login-content">
+        <span class="close-modal" onclick="closeLoginPage('transportadoraRegister')">&times;</span>
+        <h2 class="login-title">Cadastro de Transportadora</h2>
+        <p class="login-subtitle">Cadastre sua transportadora para oferecer serviços de entrega</p>
+        
+        <form class="login-form" id="transportadoraRegisterForm">
+            <div class="form-group">
+                <label for="transportadora-register-name">Nome da Transportadora</label>
+                <input type="text" id="transportadora-register-name" placeholder="Nome da empresa" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="transportadora-register-documento">CNPJ/CPF</label>
+                <input type="text" id="transportadora-register-documento" 
+                       placeholder="00.000.000/0000-00 ou 000.000.000-00" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="transportadora-register-phone">Telefone</label>
+                <input type="tel" id="transportadora-register-phone" placeholder="(11) 99999-9999" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="transportadora-register-email">E-mail</label>
+                <input type="email" id="transportadora-register-email" placeholder="empresa@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="transportadora-register-vehicle">Tipo de Veículo</label>
+                <select id="transportadora-register-vehicle" required>
+                    <option value="">Selecione o tipo de veículo</option>
+                    <option value="caminhao_pequeno">Caminhão Pequeno</option>
+                    <option value="caminhao_medio">Caminhão Médio</option>
+                    <option value="caminhao_grande">Caminhão Grande</option>
+                    <option value="furgao">Furgão</option>
+                    <option value="van">Van</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="transportadora-register-capacity">Capacidade (kg)</label>
+                <input type="number" id="transportadora-register-capacity" placeholder="1000" required min="100">
+            </div>
+            
+            <div class="form-group">
+                <label for="transportadora-register-password">Senha</label>
+                <input type="password" id="transportadora-register-password" placeholder="Crie uma senha segura" required minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="transportadora-register-confirm-password">Confirmar Senha</label>
+                <input type="password" id="transportadora-register-confirm-password" placeholder="Digite novamente sua senha" required>
+            </div>
+            
+            <button type="submit" class="login-button">CRIAR CONTA</button>
+        </form>
+        
+        <button class="toggle-form" onclick="showLoginForm('transportadora')">
+            Já tem uma conta? Faça login aqui
+        </button>
+        
+        <button class="back-button" onclick="closeLoginPage('transportadoraRegister')">Voltar para a seleção de perfil</button>
+    </div>
+</div>
+
+<script>
+    // Elementos do DOM
+    const joinButton = document.getElementById('joinButton');
+    const profileModal = document.getElementById('profileModal');
+    const closeModal = document.getElementById('closeModal');
+    const profileOptions = document.querySelectorAll('.profile-option');
+    const body = document.body;
+
+    // URLs da API (substitua pelas suas URLs reais)
+    const API_URLS = {
+        agricultor: {
+            login: 'https://sua-api.com/auth/agricultor/login',
+            register: 'https://sua-api.com/auth/agricultor/register'
+        },
+        cliente: {
+            login: 'https://sua-api.com/auth/cliente/login',
+            register: 'https://sua-api.com/auth/cliente/register'
+        },
+        transportadora: {
+            login: 'https://sua-api.com/auth/transportadora/login',
+            register: 'https://sua-api.com/auth/transportadora/register'
+        }
+    };
+
+    // Abrir modal ao clicar no botão
+    joinButton.addEventListener('click', () => {
+        profileModal.style.display = 'flex';
+        body.classList.add('modal-open');
+    });
+
+    // Fechar modal ao clicar no X
+    closeModal.addEventListener('click', () => {
+        profileModal.style.display = 'none';
+        body.classList.remove('modal-open');
+    });
+
+    // Fechar modal ao clicar fora do conteúdo
+    profileModal.addEventListener('click', (e) => {
+        if (e.target === profileModal) {
+            profileModal.style.display = 'none';
+            body.classList.remove('modal-open');
+        }
+    });
+
+    // Selecionar um perfil
+    profileOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const profile = option.getAttribute('data-profile');
+            
+            // Fechar o modal de seleção
+            profileModal.style.display = 'none';
+            body.classList.remove('modal-open');
+            
+            // Abrir a página de login correspondente
+            setTimeout(() => {
+                document.getElementById(profile + 'Login').style.display = 'flex';
+                body.classList.add('modal-open');
+            }, 300);
+        });
+    });
+
+    // Fechar modal com a tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (profileModal.style.display === 'flex') {
+                profileModal.style.display = 'none';
+                body.classList.remove('modal-open');
+            }
+            
+            // Fechar qualquer página de login aberta
+            document.querySelectorAll('.login-page').forEach(page => {
+                if (page.style.display === 'flex') {
+                    page.style.display = 'none';
+                    body.classList.remove('modal-open');
+                }
+            });
+        }
+    });
+
+    // Função para fechar páginas de login
+    function closeLoginPage(pageId) {
+        document.getElementById(pageId).style.display = 'none';
+        body.classList.remove('modal-open');
+    }
+
+    // Alternar entre login e cadastro
+    function showRegisterForm(profileType) {
+        document.getElementById(profileType + 'Login').style.display = 'none';
+        document.getElementById(profileType + 'Register').style.display = 'flex';
+    }
+
+    function showLoginForm(profileType) {
+        document.getElementById(profileType + 'Register').style.display = 'none';
+        document.getElementById(profileType + 'Login').style.display = 'flex';
+    }
+
+    // Formatação de CPF/CNPJ
+    function formatCPF(cpf) {
+        cpf = cpf.replace(/\D/g, '');
+        if (cpf.length <= 11) {
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+        return cpf;
+    }
+
+    function formatCNPJ(cnpj) {
+        cnpj = cnpj.replace(/\D/g, '');
+        if (cnpj.length <= 14) {
+            return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        }
+        return cnpj;
+    }
+
+    // Aplicar máscaras de CPF/CNPJ
+    document.getElementById('agricultor-cpf').addEventListener('input', function(e) {
+        this.value = formatCPF(this.value);
+    });
+
+    document.getElementById('agricultor-register-cpf').addEventListener('input', function(e) {
+        this.value = formatCPF(this.value);
+    });
+
+    document.getElementById('transportadora-documento').addEventListener('input', function(e) {
+        const value = this.value.replace(/\D/g, '');
+        if (value.length <= 11) {
+            this.value = formatCPF(value);
+        } else {
+            this.value = formatCNPJ(value);
+        }
+    });
+
+    document.getElementById('transportadora-register-documento').addEventListener('input', function(e) {
+        const value = this.value.replace(/\D/g, '');
+        if (value.length <= 11) {
+            this.value = formatCPF(value);
+        } else {
+            this.value = formatCNPJ(value);
+        }
+    });
+
+    // Formatação de telefone
+    function formatPhone(phone) {
+        phone = phone.replace(/\D/g, '');
+        if (phone.length <= 11) {
+            return phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+        }
+        return phone;
+    }
+
+    // Aplicar máscara de telefone
+    const phoneInputs = document.querySelectorAll('input[type="tel"]');
+    phoneInputs.forEach(input => {
+        input.addEventListener('input', function(e) {
+            this.value = formatPhone(this.value);
+        });
+    });
+
+    // Validação de formulários
+    document.getElementById('agricultorRegisterForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            nome: document.getElementById('agricultor-register-name').value,
+            cpf: document.getElementById('agricultor-register-cpf').value.replace(/\D/g, ''),
+            telefone: document.getElementById('agricultor-register-phone').value.replace(/\D/g, ''),
+            email: document.getElementById('agricultor-register-email').value,
+            senha: document.getElementById('agricultor-register-password').value
+        };
+
+        // Validar confirmação de senha
+        const confirmPassword = document.getElementById('agricultor-register-confirm-password').value;
+        if (formData.senha !== confirmPassword) {
+            alert('As senhas não coincidem!');
+            return;
+        }
+
+        await registerUser('agricultor', formData);
+    });
+
+    document.getElementById('clienteRegisterForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            nome: document.getElementById('cliente-register-name').value,
+            telefone: document.getElementById('cliente-register-phone').value.replace(/\D/g, ''),
+            email: document.getElementById('cliente-register-email').value,
+            senha: document.getElementById('cliente-register-password').value
+        };
+
+        // Validar confirmação de senha
+        const confirmPassword = document.getElementById('cliente-register-confirm-password').value;
+        if (formData.senha !== confirmPassword) {
+            alert('As senhas não coincidem!');
+            return;
+        }
+
+        await registerUser('cliente', formData);
+    });
+
+    document.getElementById('transportadoraRegisterForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            nome: document.getElementById('transportadora-register-name').value,
+            documento: document.getElementById('transportadora-register-documento').value.replace(/\D/g, ''),
+            telefone: document.getElementById('transportadora-register-phone').value.replace(/\D/g, ''),
+            email: document.getElementById('transportadora-register-email').value,
+            tipo_veiculo: document.getElementById('transportadora-register-vehicle').value,
+            capacidade: document.getElementById('transportadora-register-capacity').value,
+            senha: document.getElementById('transportadora-register-password').value
+        };
+
+        // Validar confirmação de senha
+        const confirmPassword = document.getElementById('transportadora-register-confirm-password').value;
+        if (formData.senha !== confirmPassword) {
+            alert('As senhas não coincidem!');
+            return;
+        }
+
+        await registerUser('transportadora', formData);
+    });
+
+    // Login handlers
+    document.getElementById('agricultorLoginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            cpf: document.getElementById('agricultor-cpf').value.replace(/\D/g, ''),
+            senha: document.getElementById('agricultor-password').value
+        };
+
+        await loginUser('agricultor', formData);
+    });
+
+    document.getElementById('clienteLoginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            email: document.getElementById('cliente-email').value,
+            senha: document.getElementById('cliente-password').value
+        };
+
+        await loginUser('cliente', formData);
+    });
+
+    document.getElementById('transportadoraLoginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            documento: document.getElementById('transportadora-documento').value.replace(/\D/g, ''),
+            senha: document.getElementById('transportadora-password').value
+        };
+
+        await loginUser('transportadora', formData);
+    });
+
+    // Funções de API
+    async function registerUser(userType, data) {
+        try {
+            const response = await fetch(API_URLS[userType].register, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('Cadastro realizado com sucesso! Faça login para continuar.');
+                showLoginForm(userType);
+            } else {
+                alert('Erro no cadastro: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro de conexão. Tente novamente.');
+        }
+    }
+
+    async function loginUser(userType, data) {
+        try {
+            const response = await fetch(API_URLS[userType].login, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Salvar token e redirecionar
+                localStorage.setItem('authToken', result.token);
+                localStorage.setItem('userType', userType);
+                alert('Login realizado com sucesso!');
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Erro no login: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro de conexão. Tente novamente.');
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato - Cultiva+</title>
+<link rel="shortcut icon" href="./imagens/cabeca.png" type="image/x-icon">
+<link rel="stylesheet" href="./css/contato.css">
+</head>
+<body>
+<header>
+    <a href="index.html" class="logo">CULTIVA+</a>
+    <nav>
+        <a href="index.html">INÍCIO</a>
+        <a href="marketplace.html">MARKETPLACE</a>
+        <a href="#">CLIMA</a>
+        <a href="#">AGRO-CONECTA</a>
+        <a href="sobre.html">SOBRE NÓS</a>
+        <a href="contato.html" class="active">CONTATO</a>
+    </nav>
+</header>
+
+<div class="content">
+    <div class="contact-container">
+        <h1>Fale Conosco</h1>
+        <p class="subtitle">Entre em contato com a nossa equipe. Responderemos em breve!</p>
+        
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="nome">Seu Nome</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Seu Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="assunto">Assunto</label>
+                <select id="assunto" name="assunto" required>
+                    <option value="">Selecione um assunto</option>
+                    <option value="Dúvida">Dúvida</option>
+                    <option value="Sugestão">Sugestão</option>
+                    <option value="Reclamação">Reclamação</option>
+                    <option value="Parceria">Parceria</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="mensagem">Sua Mensagem</label>
+                <textarea id="mensagem" name="mensagem" required></textarea>
+            </div>
+            
+            <button type="submit" id="submit-btn">Enviar Mensagem</button>
+        </form>
+        
+        <div id="status-message" class="status-message"></div>
+    </div>
+</div>
+
+<a href="chatbot.html">
+    <img src="./imagens/cabeca.png" alt="Mascote" class="mascote-btn">
+</a>
+
+<script>
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const statusMessage = document.getElementById('status-message');
+    
+    // URL do Google Apps Script (substitua pela sua URL)
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw7Rv4aqwV8Kuc39511nO58R641VpSR2ci151JsdmUdqv0BeC2EnAZFIj1gTPXuu4PO/exec';
+    
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Desativar o botão para evitar múltiplos envios
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
+        
+        // Coletar dados do formulário
+        const formData = {
+            nome: document.getElementById('nome').value,
+            email: document.getElementById('email').value,
+            assunto: document.getElementById('assunto').value,
+            mensagem: document.getElementById('mensagem').value,
+            timestamp: new Date().toLocaleString('pt-BR')
+        };
+        
+        // Mostrar estado de carregamento
+        showStatus('Enviando mensagem...', 'loading');
+        
+        try {
+            // Enviar dados para o Google Apps Script
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            // Verificar se a resposta é válida
+            if (!response.ok) {
+                throw new Error(`Erro HTTP: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showStatus('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
+                contactForm.reset();
+            } else {
+                showStatus('Erro ao enviar mensagem: ' + data.message, 'error');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            showStatus('Erro de conexão. Tente novamente mais tarde.', 'error');
+        } finally {
+            // Reativar o botão
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Enviar Mensagem';
+        }
+    });
+    
+    function showStatus(message, type) {
+        statusMessage.textContent = message;
+        statusMessage.className = 'status-message ' + type;
+        
+        // Se não for mensagem de carregamento, esconder após 5 segundos
+        if (type !== 'loading') {
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 5000);
+        }
+    }
+    
+    // Validação em tempo real
+    document.getElementById('email').addEventListener('blur', function() {
+        const email = this.value;
+        if (email && !validateEmail(email)) {
+            showStatus('Por favor, insira um email válido.', 'error');
+        }
+    });
+    
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+</script>
+
+</body>
+</html>

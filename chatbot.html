@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agrobot - Cultiva+</title>
+<link rel="shortcut icon" href="./imagens/cabeca.png" type="image/x-icon">
+<link rel="stylesheet" href="./css/chatbot.css">
+</head>
+<body>
+
+<div class="chatbot-container">
+    <!-- Menu lateral -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="./imagens/cabeca.png" alt="Logo Agrobot">
+            <h2>AGROBOT</h2>
+        </div>
+
+        <button class="new-chat-btn" id="new-chat-btn">Nova conversa</button>
+
+        <div class="chat-history" id="chat-list">
+            <div class="chat-item active" data-chat="default">Conversa Principal</div>
+            <!-- Novas conversas serão adicionadas aqui -->
+        </div>
+
+        <div class="sidebar-actions">
+            <button class="action-btn" id="clear-chat">Limpar conversas</button>
+            <button class="action-btn" id="show-faq">Atualizações e perguntas</button>
+            <a href="index.html" class="back-to-cultiva">Voltar para Cultiva+</a>
+        </div>
+    </div>
+
+    <!-- Área principal de conversação -->
+    <div class="chat-main">
+        <div class="chat-header">
+            <div class="nav-links">
+                <a href="marketplace.html">MARKETPLACE</a>
+                <a href="#">CLIMA</a>
+                <a href="#">AGRO-CONECTA</a>
+                <a href="sobre.html">SOBRE NÓS</a>
+                <a href="contato.html">CONTATO</a>
+            </div>
+            <h1 class="chat-title">Assistente Virtual Cultiva+</h1>
+            <img src="./imagens/cabeca.png" alt="Mascote" class="mascote-top">
+        </div>
+
+        <div class="chat-area" id="chat-area">
+            <div class="message bot">
+                Olá! Sou o Agrobot, seu assistente virtual do Cultiva+. Como posso ajudar você hoje?
+            </div>
+        </div>
+
+        <div class="faq-container" id="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">Como calcular a quantidade de insumos para minha plantação?</div>
+                <div class="faq-answer">Use nossa calculadora de insumos fornecendo informações sobre o tipo de cultura, área plantada e tipo de solo.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Quais são as melhores épocas para plantar milho?</div>
+                <div class="faq-answer">O milho é geralmente plantado no início da estação chuvosa, mas varia de acordo com a região.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Como controlar pragas naturalmente?</div>
+                <div class="faq-answer">Métodos como rotação de culturas, uso de insetos benéficos e preparados naturais podem ajudar.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">O que fazer em caso de geada prevista?</div>
+                <div class="faq-answer">Irrigação noturna, cobertura das plantas e quebra-ventos podem ajudar a minimizar danos.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Como melhorar a qualidade do solo?</div>
+                <div class="faq-answer">Adubação verde, compostagem e plantio direto são técnicas eficazes para melhorar a qualidade do solo.</div>
+            </div>
+        </div>
+
+        <div class="chat-footer">
+            <img src="./imagens/cabeca.png" alt="Mascote pequeno">
+            <input type="text" class="chat-input" id="user-input" placeholder="Digite sua mensagem...">
+            <button class="send-btn" id="send-btn">➤</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const chatArea = document.getElementById("chat-area");
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
+    const newChatBtn = document.getElementById("new-chat-btn");
+    const clearChatBtn = document.getElementById("clear-chat");
+    const showFaqBtn = document.getElementById("show-faq");
+    const chatList = document.getElementById("chat-list");
+    const faqContainer = document.getElementById("faq-container");
+    const mainChat = document.getElementById("chat-area");
+    
+    let currentChat = "default";
+    let chatCount = 0;
+    let faqVisible = false;
+
+    // Função para adicionar mensagem ao chat
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", sender);
+        messageDiv.innerHTML = text;
+        chatArea.appendChild(messageDiv);
+        
+        // Rolagem automática para a última mensagem
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    // Função para enviar mensagem
+    function sendMessage() {
+        const text = userInput.value.trim();
+        if (!text) return;
+
+        addMessage(text, "user");
+        userInput.value = "";
+    }
+
+    // Função para criar novo chat
+    function createNewChat() {
+        chatCount++;
+        const newChatId = `chat-${chatCount}`;
+        const newChatItem = document.createElement("div");
+        newChatItem.classList.add("chat-item");
+        newChatItem.textContent = `Conversa ${chatCount}`;
+        newChatItem.setAttribute("data-chat", newChatId);
+        
+        newChatItem.addEventListener("click", () => {
+            document.querySelectorAll('.chat-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            newChatItem.classList.add('active');
+            currentChat = newChatId;
+            chatArea.innerHTML = '';
+            addMessage("Nova conversa iniciada. Como posso ajudar?", "bot");
+        });
+        
+        chatList.appendChild(newChatItem);
+    }
+
+    // Função para limpar conversas
+    function clearChat() {
+        chatArea.innerHTML = '';
+        addMessage("Conversa limpa. Como posso ajudar?", "bot");
+    }
+
+    // Função para mostrar/ocultar FAQ
+    function toggleFaq() {
+        if (faqVisible) {
+            faqContainer.style.display = 'none';
+            mainChat.style.display = 'flex';
+            faqVisible = false;
+        } else {
+            faqContainer.style.display = 'block';
+            mainChat.style.display = 'none';
+            faqVisible = true;
+        }
+    }
+
+    // Event listeners para os botões de ação rápida
+    document.querySelectorAll('.chat-item').forEach(item => {
+        item.addEventListener('click', function() {
+            if (this.getAttribute('data-chat') === 'calculadora') {
+                chatArea.innerHTML = '';
+                addMessage("Vamos usar a calculadora de insumos. Por favor, informe:", "bot");
+                addMessage("1. Tipo de cultura<br>2. Área plantada (hectares)<br>3. Tipo de solo<br>4. Produto que deseja calcular", "bot");
+            } else if (this.getAttribute('data-chat') === 'guia') {
+                chatArea.innerHTML = '';
+                addMessage("Sobre qual aspecto da agricultura você precisa de orientação?", "bot");
+                addMessage("• Preparo do solo<br>• Plantio<br>• Adubação<br>• Controle de pragas<br>• Colheita", "bot");
+            } else {
+                // Conversa padrão
+                if (this.getAttribute('data-chat') !== currentChat) {
+                    chatArea.innerHTML = '';
+                    addMessage("Olá! Como posso ajudar?", "bot");
+                    currentChat = this.getAttribute('data-chat');
+                }
+            }
+            
+            // Ativar o item clicado
+            document.querySelectorAll('.chat-item').forEach(i => {
+                i.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+
+    // Adicionar eventos
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendMessage();
+    });
+    newChatBtn.addEventListener("click", createNewChat);
+    clearChatBtn.addEventListener("click", clearChat);
+    showFaqBtn.addEventListener("click", toggleFaq);
+
+    // FAQ interactivity
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const answer = this.querySelector('.faq-answer');
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+            } else {
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.style.display = 'none';
+                });
+                answer.style.display = 'block';
+            }
+        });
+    });
+
+    // Focar no input quando a página carregar
+    window.addEventListener("load", () => {
+        userInput.focus();
+    });
+</script>
+
+</body>
+</html>
